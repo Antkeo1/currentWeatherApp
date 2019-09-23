@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    
+    <style>
+        body {
+            text-align: center;
+        }
+    
+    </style>
+</head>
+<body>
+    <h2>Welcome to Current Weather App</h2>
+    <h4 id='header'>If you're to lazy to look out the window, Click to find out the current weather</h4>
+    <button class="btn btn-primary" id='button'>Click me</button>
+    <div id='text'>
+
+    </div>
+    
+    <script>
+        document.getElementById('button').addEventListener('click', loadWeather)
+
+        function loadWeather() {
+            // created object req unsent
+            var xhr = new XMLHttpRequest();
+            var URL = 'http://api.openweathermap.org/data/2.5/forecast?zip=02909&APPID=68471b7f4c951a712d240ff5e34b1a66'
+            console.log(xhr)
+            
+            // req is opened
+            xhr.open("GET", URL, true); // <-- Get request 
+
+            xhr.onload = function() {
+               
+                    // to display data as json object
+                    var parsedData = JSON.parse(xhr.responseText)
+                    console.log(parsedData.list[0].weather[0].main)
+                    
+                    if (parsedData.list[0].weather[0].main === 'Clouds') {
+                        // to show text of weather
+                        var paragraph = document.getElementById("text");
+                        var text = document.createTextNode("It's a cloudy day");
+                        paragraph.appendChild(text);
+                        
+                        // to show image of current weather 
+                        var x = document.createElement('IMG');
+                        x.setAttribute('src', 'cloudy.jpeg');
+                        x.setAttribute("width", "304");
+                        x.setAttribute("height", "228");
+                        document.body.appendChild(x);
+
+                        // to get rid of header when image renders
+                        var h = document.getElementById("header");
+                        if (h.style.display === "none") {
+                            h.style.display = "block";
+                        } else {
+                            h.style.display = "none";
+                        }
+
+                        // to make button unclickable after it clicks
+                        document.getElementById("button").disabled = true; 
+                    
+                    } else if (parsedData.list[0].weather[0].main === 'Clear') {
+                        // show image of sun
+                        var paragraph = document.getElementById("text");
+                        var text = document.createTextNode("It's a sunny day");
+                        paragraph.appendChild(text);
+                        
+                        var x = document.createElement('IMG');
+                        x.setAttribute('src', 'sunny.jpg');
+                        x.setAttribute("width", "304");
+                        x.setAttribute("height", "228");
+                        document.body.appendChild(x);
+
+                        var h = document.getElementById("header");
+                        if (h.style.display === "none") {
+                            h.style.display = "block";
+                        } else {
+                            h.style.display = "none";
+                        }
+
+                        document.getElementById("button").disabled = true; 
+
+                    
+                    } else if (parsedData.list[0].weather[0].main === 'Rain') {
+                        // show image of rain
+                        var paragraph = document.getElementById("text");
+                        var text = document.createTextNode("It's a rainy day");
+                        paragraph.appendChild(text);
+                        
+                        
+                        var x = document.createElement('IMG');
+                        x.setAttribute('src', 'rainy.jpeg');
+                        x.setAttribute("width", "304");
+                        x.setAttribute("height", "228");
+                        document.body.appendChild(x);
+
+                        var h = document.getElementById("header");
+                        if (h.style.display === "none") {
+                            h.style.display = "block";
+                        } else {
+                            h.style.display = "none";
+                        }
+
+                        document.getElementById("button").disabled = true; 
+                    
+                    } else {
+                        // show image of snow
+                        var paragraph = document.getElementById("text");
+                        var text = document.createTextNode("It's a snowy day");
+                        paragraph.appendChild(text);
+
+                        var x = document.createElement('IMG');
+                        x.setAttribute('src', 'snowy.webp');
+                        x.setAttribute("width", "304");
+                        x.setAttribute("height", "228");
+                        document.body.appendChild(x);
+
+                        var h = document.getElementById("header");
+                        if (h.style.display === "none") {
+                            h.style.display = "block";
+                        } else {
+                            h.style.display = "none";
+                        }
+
+                        document.getElementById("button").disabled = true; 
+                    }
+                
+            }  
+            // send out the data 
+            xhr.send();
+        };
+
+
+    </script>
+        
+</body>
+</html>
